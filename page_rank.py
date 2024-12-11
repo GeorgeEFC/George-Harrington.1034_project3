@@ -31,6 +31,12 @@ def load_graph(args):
 
     return graph
 
+def print_graph(graph):
+    """Print the graph structure."""
+    print("Graph structure:")
+    for node, edges in graph.items():
+        edges_str = ", ".join(edges) if edges else "(no outgoing edges)"
+        print(f"{node} -> {edges_str}")
 
 
 def print_stats(graph):
@@ -63,7 +69,6 @@ def stochastic_page_rank(graph, args):
     """
     # Initialize hit_count for all nodes in the graph
     hit_count = {node: 0 for node in graph}
-
     # Select a random starting node
     current_node = random.choice(list(graph.keys()))
     hit_count[current_node] += 1
@@ -127,6 +132,7 @@ parser.add_argument('-m', '--method', choices=('stochastic', 'distribution'), de
 parser.add_argument('-r', '--repeats', type=int, default=1_000_000, help="number of repetitions")
 parser.add_argument('-s', '--steps', type=int, default=100, help="number of steps a walker takes")
 parser.add_argument('-n', '--number', type=int, default=20, help="number of results shown")
+parser.add_argument('--print-graph', action='store_true', help="Print the graph in adjacency list format")
 
 
 if __name__ == '__main__':
@@ -135,7 +141,8 @@ if __name__ == '__main__':
 
     graph = load_graph(args)
 
-    print_stats(graph)
+    print_graph(graph)
+
 
     start = time.time()
     ranking = algorithm(graph, args)
