@@ -132,7 +132,7 @@ parser.add_argument('-m', '--method', choices=('stochastic', 'distribution'), de
 parser.add_argument('-r', '--repeats', type=int, default=1_000_000, help="number of repetitions")
 parser.add_argument('-s', '--steps', type=int, default=100, help="number of steps a walker takes")
 parser.add_argument('-n', '--number', type=int, default=20, help="number of results shown")
-parser.add_argument('--print-graph', action='store_true', help="Print the graph in adjacency list format")
+parser.add_argument('-p', '--print-graph', action='store_true', help="Print the graph in adjacency list format")
 
 
 if __name__ == '__main__':
@@ -141,7 +141,9 @@ if __name__ == '__main__':
 
     graph = load_graph(args)
 
-    print_graph(graph)
+    if args.print_graph:
+        print_graph(graph)
+
 
 
     start = time.time()
