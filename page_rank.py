@@ -71,7 +71,8 @@ def stochastic_page_rank(graph, args):
     hit_count = {node: 0 for node in graph}
     # Select a random starting node
     current_node = random.choice(list(graph.keys()))
-    hit_count[current_node] += 1
+
+    progress = Progress(args.steps, title="Stochastic PageRank", width=50)
 
     # Perform the random walk for the specified number of steps (n_steps)
     for _ in range(args.steps):
@@ -84,6 +85,11 @@ def stochastic_page_rank(graph, args):
 
         # Increment the hit count for the visited node
         hit_count[current_node] += 1
+
+        progress += 1
+        progress.show()
+
+    progress.finish()
 
     return hit_count
 
@@ -104,6 +110,8 @@ def distribution_page_rank(graph, args):
     num_nodes = len(graph)
     node_prob = {node: 1 / num_nodes for node in graph}
 
+    progress = Progress(args.steps, title="Distribution PageRank", width=50)
+
     # Repeat the process for n_steps times
     for _ in range(args.steps):
         # Initialize the next probabilities to 0
@@ -120,6 +128,11 @@ def distribution_page_rank(graph, args):
 
         # Update node probabilities with next_prob
         node_prob = next_prob
+
+        progress += 1
+        progress.show()
+
+    progress.finish()
 
     return node_prob
 
@@ -143,6 +156,7 @@ if __name__ == '__main__':
 
     if args.print_graph:
         print_graph(graph)
+
 
 
 
